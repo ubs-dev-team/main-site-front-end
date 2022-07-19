@@ -3,17 +3,11 @@
 import React from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
-import { useRouter } from 'next/router';
-import { useTheme } from 'styled-components';
 import { ExecutiveData } from '../../../data/about.data';
 import Separator from '../../lib/separator/Separator.component';
-import ButtonComponent from '../../lib/button/Button.component';
 
 //=============================================>  RENDER
 const ExecutiveComponent = () => {
-  const router = useRouter();
-  const theme = useTheme();
-
   return (
     <Container>
       <Title> Meet the Executives</Title>
@@ -26,11 +20,17 @@ const ExecutiveComponent = () => {
             return (
               <ExecCard
                 key={index}
-                style={{ area }}
+                area={area}
                 data-aos='fade-up'
                 data-aos-delay={data.delay}
               >
-                <Image src={data.image} alt='' layout='fill' />
+                <Image
+                  src={data.image}
+                  alt=''
+                  layout='fill'
+                  objectFit='cover'
+                  quality={100}
+                />
                 <TitleCard>
                   <h1>{data.name}</h1>
                   <p>{data.title}</p>
@@ -39,14 +39,6 @@ const ExecutiveComponent = () => {
             );
           })}
       </ExecWrapper>
-
-      <ButtonComponent
-        bg={theme.colors.clr_4}
-        hv_bg={theme.colors.clr_2}
-        color={theme.colors.lt_2}
-        text='view all'
-        onClick={() => router.push('about/executives')}
-      />
     </Container>
   );
 };
@@ -72,14 +64,18 @@ const ExecWrapper = styled.section`
   display: grid;
   align-items: center;
   justify-content: center;
-  grid-template-areas: ' card_1 card_2 card_3';
+  grid-template-areas:
+    'card_1 card_2 card_3'
+    'card_4 . card_5';
 
   @media (max-width: 1024px) {
     gap: 70px;
     grid-template-areas:
       'card_1'
       'card_2'
-      'card_3';
+      'card_3'
+      'card_4'
+      'card_5';
   }
 `;
 
@@ -91,8 +87,8 @@ const ExecCard = styled.div`
   position: relative;
   align-items: center;
   border-radius: 10px;
-  background-color: red;
   justify-content: center;
+  grid-area: ${({ area }) => area};
   box-shadow: 5px 5px 0 ${({ theme }) => theme.colors.lt_2},
     10px 10px 0 ${({ theme }) => theme.colors.clr_2},
     15px 15px 0 ${({ theme }) => theme.colors.lt_2},
@@ -106,6 +102,7 @@ const ExecCard = styled.div`
 
 const Title = styled.h2`
   font-weight: 800;
+  text-align: center;
   font-size: ${({ theme }) => theme.fonts.size.xl};
   color: ${({ theme }) => theme.colors.dk_1};
 `;
@@ -138,6 +135,7 @@ const TitleCard = styled.div`
   @media (max-width: 480px) {
     gap: 2px;
     height: 50px;
+
     h1 {
       font-weight: 500;
       font-size: ${({ theme }) => theme.fonts.size.md};

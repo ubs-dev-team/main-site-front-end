@@ -13,9 +13,6 @@ const Card = ({ ...props }) => {
       <Icon icon={icon} color='white' height='60' />
       <Title>{title}</Title>
       <Content>{content}</Content>
-      <Link href='' passHref>
-        <a>Learn more</a>
-      </Link>
     </Container>
   );
 };
@@ -24,7 +21,7 @@ export default Card;
 
 //=============================================>  STYLE
 const Container = styled.div`
-  gap: 10%;
+  gap: 6%;
   display: flex;
   padding: 10% 2%;
   text-align: center;
@@ -39,6 +36,13 @@ const Container = styled.div`
 
   @media screen and (max-width: 1024px) {
     width: 80%;
+  }
+
+  a {
+    transition: 300ms all ease-in-out;
+    &:hover {
+      color: cyan;
+    }
   }
 `;
 

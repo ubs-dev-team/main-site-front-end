@@ -1,10 +1,12 @@
 /** 🌹oddFEELING */
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { Icon } from '@iconify/react';
 import { useTheme } from 'styled-components';
+import { elementsStore } from '../../../context/element.context';
 import { AddressData, SocialData } from '../../../data/footer.data';
+import MailchimpComponent from '../mailchimp/Mailchimp.component';
 import LogoImg from '../../../assets/images/logo/logo.jpg';
 import {
   ContactCard,
@@ -22,6 +24,13 @@ import {
 
 const Footer = () => {
   const theme = useTheme();
+  const footRef = useRef();
+  const { setfooterElement } = elementsStore();
+
+  useEffect(() => {
+    setfooterElement(footRef.current);
+    console.log(footRef.current);
+  }, [footRef]);
 
   return (
     <Container>
@@ -63,7 +72,8 @@ const Footer = () => {
         </ContactDiv>
 
         <SubscribeDiv>
-          <h1>Newsletter Coming soon!</h1>
+          <h1>Join the NewsLetter!</h1>
+          <MailchimpComponent />
         </SubscribeDiv>
 
         <SocialDiv>
@@ -85,7 +95,7 @@ const Footer = () => {
           </SocialWrapper>
         </SocialDiv>
       </MiddleSection>
-      <DarkSection />
+      <DarkSection ref={footRef} />
     </Container>
   );
 };
